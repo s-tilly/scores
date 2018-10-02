@@ -112,7 +112,7 @@ bpm = 72
 
 tonality = $tonality
 
-\include "LilyJAZZ.ily"
+\include "../LilyJAZZ.ily"
 
 #(set-default-paper-size "a4")
 \paper {
