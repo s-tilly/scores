@@ -3,24 +3,32 @@
 \include "lib/LilyJAZZ.ily"
 \include "lib/custom.ily"
 
-title = "Yes I Can, No you can't"
+title = "Yes I Can, No You Can't"
 composer = "Lee Morgan"
 
-%% Une grille du morceau (qui servira pour l'improvisation)
-%grille = \chordmode {
-%  ees1:7 aes:7 ees:7 ees:7
-%  aes:7  aes:7 ees:7 ees:7
-%  f:m    bes:7 ees:7 f2:m bes:7
-%}
+% Une grille du morceau (qui servira pour l'improvisation)
+grille = \chordmode {
+  f1:7 bes:7 f:7 f:7
+  f:7 bes:7 f:7 f:7
+  bes:7 bes:7 bes:7 bes:7
+  f g:m7 f/a aes:m7
+  g:7 g:7 ges:7 ges:7
+  f:7 bes:7 f:7 c:7
+}
 %
-%% L'harmonie du morceau
-%harmonie = \chordmode {
-%  r1
-%  \grille
-%  \grille
-%}
+% L'harmonie du morceau
+harmonie = \chordmode {
+  f1:7 f1:7 f1:7 f1:7
+  \grille
+}
 
 theme = \relative c' {
+  \key f \major
+
+  \mark "Introduction"
+  \bar ".|:" \repeat volta 2 { \repeat percent 4 { R1 } } \break
+
+  \mark "Theme"
   f4\staccato r8 f\staccato c'16-> bes8. gis16( a) r8
   r8 c~ \tuplet 3/2 {c8 ees f} bes16 a aes8~ aes ees16 f
   <d, gis>8 <ees a>~ <ees a>2 r4
@@ -71,11 +79,11 @@ tonality = $tonality
 
 
 
-%internal_harmonie = \relative \chordmode {
-%  \override ChordNames . ChordName #'font-name = #"LilyJazz Text, LilyJAZZ"
-%  \override ChordNames . ChordName #'font-size = #4
-%  \harmonie
-%}
+internal_harmonie = \relative \chordmode {
+  \override ChordNames . ChordName #'font-name = #"LilyJazz Text, LilyJAZZ"
+  \override ChordNames . ChordName #'font-size = #4
+  \harmonie
+}
 
 \bookpart {
     \header {
@@ -105,11 +113,11 @@ tonality = $tonality
 
     \score {
       <<
-        %\context ChordNames {
-        %    \key c \major \transpose c $transposition \internal_harmonie
-        %}
+        \context ChordNames {
+            \transpose c $transposition \internal_harmonie
+        }
 
-            \new Staff { \key f \major \jazzOn \transpose c $transposition \theme }
+            \new Staff { \jazzOn \transpose c $transposition \theme }
       >>
 
         %\layout {}
@@ -118,89 +126,77 @@ tonality = $tonality
         %}
     }
 }
-%\bookpart {
-%    \header {
-%
-%      title = \markup {
-%          \override #'(font-name . "LilyJazz Text")
-%          \fontsize #7
-%          #title
-%      }
-%
-%      subtitle = \markup {
-%          \override #'(font-name . "LilyJazz Text")
-%          \fontsize #6
-%          Improvisation
-%      }
-%      poet = \markup {
-%          %\override #'(font-name . "LilyJazz Text")
-%          \rotate #8
-%          \fontsize #4
-%          #tonality
-%      }
-%      composer = \markup {
-%          \override #'(font-name . "LilyJazz Text")
-%          \fontsize #4
-%          #composer
-%      }
-%      piece = \markup {
-%          \override #'(font-name . "LilyJazz Text")
-%          \fontsize #1
-%          grille
-%      }
-%      tagline = ##t % removed
-%    }
-%
-%    \score
-%    {
-%     <<
-%        \context ChordNames {
-%            \override ChordNames . ChordName #'font-name = #"LilyJazz Text, LilyJAZZ"
-%            \override ChordNames . ChordName #'font-size = #4
-%            \key c \major \transpose c $transposition \grille
-%        }
-%        \new Staff { \jazzOn
-%            \bar "||"
-%            \rs \rs \rs \rs |
-%            \rs \rs \rs \rs |
-%            \rs \rs \rs \rs |
-%            \rs \rs \rs \rs | \break
-%            \rs \rs \rs \rs |
-%            \rs \rs \rs \rs |
-%            \rs \rs \rs \rs |
-%            \rs \rs \rs \rs | \break
-%            \rs \rs \rs \rs |
-%            \rs \rs \rs \rs |
-%            \rs \rs \rs \rs |
-%            \rs \rs \rs \rs
-%            \bar "||"
-%        }
-%       >>
-%    }
-%    \score {
-%      \header {
-%          piece = \markup {
-%              \override #'(font-name . "LilyJazz Text")
-%              \fontsize #1
-%              Background
-%          }
-%      }
-%      <<
-%          \new Staff {
-%              \jazzOn
-%              \key c \major \transpose c $transposition \relative c' {
-%                  \partial 4
-%                  ees4\staccato
-%                  \repeat volta 2 {
-%                      aes2.~^(aes8 ges\staccato)
-%                      r4 r8 bes,8^(des8.[ bes16 d8 ees8])
-%                      r1
-%                      r2 r4 ees\staccato \break
-%                  }
-%              }
-%          }
-%     >>
-%    }
-%}
+\bookpart {
+    \header {
+
+      title = \markup {
+          \override #'(font-name . "LilyJazz Text")
+          \fontsize #7
+          #title
+      }
+
+      subtitle = \markup {
+          \override #'(font-name . "LilyJazz Text")
+          \fontsize #6
+          Improvisation
+      }
+      poet = \markup {
+          %\override #'(font-name . "LilyJazz Text")
+          \rotate #8
+          \fontsize #4
+          #tonality
+      }
+      composer = \markup {
+          \override #'(font-name . "LilyJazz Text")
+          \fontsize #4
+          #composer
+      }
+      piece = \markup {
+          \override #'(font-name . "LilyJazz Text")
+          \fontsize #1
+          grille
+      }
+      tagline = ##t % removed
+    }
+
+    \score {
+      <<
+        \context ChordNames {
+          \override ChordNames . ChordName #'font-name = #"LilyJazz Text, LilyJAZZ"
+          \override ChordNames . ChordName #'font-size = #4
+          \key c \major \transpose c $transposition \grille
+        }
+        \new Staff {
+          \jazzOn
+          \bar "||"
+          \rs \rs \rs \rs |
+          \rs \rs \rs \rs |
+          \rs \rs \rs \rs |
+          \rs \rs \rs \rs | \break
+          \rs \rs \rs \rs |
+          \rs \rs \rs \rs |
+          \rs \rs \rs \rs |
+          \rs \rs \rs \rs | \break
+          \rs \rs \rs \rs |
+          \rs \rs \rs \rs |
+          \rs \rs \rs \rs |
+          \rs \rs \rs \rs | \break
+          \rs \rs \rs \rs |
+          \rs \rs \rs \rs |
+          \rs \rs \rs \rs |
+          \rs \rs \rs \rs | \break
+          \rs \rs \rs \rs |
+          \rs \rs \rs \rs |
+          \rs \rs \rs \rs |
+          \rs \rs \rs \rs | \break
+          \rs \rs \rs \rs |
+          \rs \rs \rs \rs |
+          \rs \rs \rs \rs |
+          \rs \rs \rs \rs
+          \bar "||"
+        }
+      >>
+    }
+}
 % https://github.com/veltzer/openbook
 % http://leighverlag.blogspot.com/2015/12/mimicking-real-book-look.html
