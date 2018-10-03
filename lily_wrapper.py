@@ -20,9 +20,11 @@ def argument_parser():
     parser.add_argument('-d', '--debug', required=False, default=False, action='store_true', dest='debug', help='Keep output file after lilypond usage')
     return parser.parse_args()
 
-def generate_input(filename, variables):
-    out_filename = '{}_{}'.format(variables['prefix'], filename)
-    with open(filename, 'r') as f:
+def generate_input(path, variables):
+    filename = os.path.basename(path)
+    dirname = os.path.dirname(path)
+    out_filename = os.path.join(dirname, '{}_{}'.format(variables['prefix'], filename))
+    with open(path, 'r') as f:
         src = Template(f.read())
         out = src.safe_substitute(variables)
     with open(out_filename, 'w') as f:
@@ -59,19 +61,20 @@ if __name__ == '__main__':
 
     # if ut = Ok or no option are passed
     if args.ut or not (args.e_flat or args.b_flat):
-        filename = generate_input(filename=args.ly_filename, variables=ut)
+        filename = generate_input(path=args.ly_filename, variables=ut)
         call_lilypond(filename)
         if not args.debug:
+            print("Debug mode ", args.debug)
             os.remove(filename)
 
     if args.e_flat:
-        filename = generate_input(filename=args.ly_filename, variables=e_flat)
+        filename = generate_input(path=args.ly_filename, variables=e_flat)
         call_lilypond(filename)
         if not args.debug:
             os.remove(filename)
 
     if args.b_flat:
-        filename = generate_input(filename=args.ly_filename, variables=b_flat)
+        filename = generate_input(path=args.ly_filename, variables=b_flat)
         call_lilypond(filename)
         if not args.debug:
             os.remove(filename)
