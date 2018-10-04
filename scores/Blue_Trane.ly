@@ -1,23 +1,20 @@
 \version "2.19.82"
+\include "header.ily"
 
-title = "Blue Trane"
-composer = "John Coltrane"
 
-% Une grille du morceau (qui servira pour l'improvisation)
-grille = \chordmode {
-  ees1:7 aes:7 ees:7 ees:7
-  aes:7  aes:7 ees:7 ees:7
-  f:m    bes:7 ees:7 f2:m bes:7
-}
+title = #"Blue Trane"
+composer = #"-John Coltrane"
+meter = #" (Med. Swing)"
+thetempo = #88
+%tonality = $tonality
+tonality = c
 
-% L'harmonie du morceau
-harmonie = \chordmode {
-  r1
-  \grille
-  \grille
-}
 
-head = \relative {
+\include "main.ily"
+
+theNotes_first_voice = \relative c' {
+  \set Staff.midiInstrument = "flute"
+  \key c \major
   r4 r8 bes'8 des f des ees~ \bar "||"
   ees1~ |
   ees4 r8 bes8 des f des ees~ |
@@ -46,8 +43,9 @@ head = \relative {
   ees4 r4 r2 \bar "||"
 }
 
-
-middlepart = \relative {
+TheNotes_second_voice = \relative c {
+  \set Staff.midiInstrument = "flute"
+  \key c \major
   r1  \bar "||"
   r1 |
   r1 |
@@ -76,7 +74,9 @@ middlepart = \relative {
   bes4 r4 r2 \bar "||"
 }
 
-basspart = \relative {
+TheNotes_third_voice = \relative c {
+  \set Staff.midiInstrument = "flute"
+  \key c \major
   r1  \bar "||"
   r1 |
   r1 |
@@ -104,167 +104,115 @@ basspart = \relative {
   ges4 r4 r2 \bar "||"
 }
 
-
-temps = 4 % 4/4
-bpm = 72
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-tonality = $tonality
-
-\include "../LilyJAZZ.ily"
-
-#(set-default-paper-size "a4")
-\paper {
-  #(set-paper-size "a4")
-  #(define dump-extents #t)
-
-  %ragged-right = ##t
-  indent = 0\mm
-  line-width = 200\mm %- 2.0 * 0.4\in
-  print-page-number = false
-  %horizontal-shift = ##t
+Background = \relative c' {
+  \key c \major
+  \partial 4
+  ees4\staccato
+  \repeat volta 2 {
+    aes2.~^(aes8 ges\staccato)
+    r4 r8 bes,8^(des8.[ bes16 d8 ees8])
+    r1
+    r2 r4 ees\staccato \break
+  }
 }
 
-rs = {
-  \once \override Rest.stencil = #ly:percent-repeat-item-interface::beat-slash
-  \once \override Rest.thickness = #0.48
-  \once \override Rest.slope = #1.7
-  r4
+% Une grille du morceau (qui servira pour l'improvisation)
+grille = \chordmode {
+  \key c \major
+  ees1:7 aes:7 ees:7 ees:7
+  aes:7  aes:7 ees:7 ees:7
+  f:m    bes:7 ees:7 f2:m bes:7
 }
 
-internal_harmonie = \relative \chordmode {
-  \override ChordNames . ChordName #'font-name = #"LilyJazz Text, LilyJAZZ"
-  \override ChordNames . ChordName #'font-size = #4
-  \harmonie
+% L'harmonie du morceau
+harmonie = \chordmode {
+  \key c \major
+  r1
+  \grille
+  \grille
 }
 
 \bookpart {
-    \header {
-        title = \markup {
-            \override #'(font-name . "LilyJazz Text")
-            \fontsize #7
-            #title
-        }
-        subtitle = \markup {
-            \override #'(font-name . "LilyJazz Text")
-            \fontsize #6
-            Thème
-        }
-        poet = \markup {
-            %\override #'(font-name . "LilyJazz Text")
-            \rotate #8
-            \fontsize #4
-            #tonality
-        }
-        composer = \markup {
-            \override #'(font-name . "LilyJazz Text")
-            \fontsize #4
-            #composer
-        }
-        tagline = ##t % removed
+  \header {
+    subtitle = \markup {
+      \override #'(font-name . "LilyJazz Text")
+      \fontsize #5
+      Thème
     }
-
-    \score { <<
-        \context ChordNames {
-            \key c \major \transpose c $transposition \internal_harmonie
-        }
-        \new StaffGroup <<
-            \new Staff { \jazzOn \transpose c $transposition \head }
-            \new Staff { \jazzOn \transpose c $transposition \middlepart }
-            \new Staff { \jazzOn \transpose c $transposition \basspart }
-        >>
-        >>
-
-        \layout {}
-        \midi {
-          % \tempo \temps = \bpm
-        }
+    poet = \markup {
+      \override #'(font-name . "lilyjazz-chord")
+%      \rotate #8
+      \fontsize #4
+      B\flat
     }
-}
-\bookpart {
-    \header {
-
-      title = \markup {
-          \override #'(font-name . "LilyJazz Text")
-          \fontsize #7
-          #title
+  }
+  \score {
+    <<
+      \context ChordNames {
+        \transpose c c \harmonie
       }
+      \new StaffGroup
+      <<
+        \new Staff { \transpose c c \theNotes_first_voice }
+        \new Staff { \transpose c c \TheNotes_second_voice }
+        \new Staff { \transpose c c \TheNotes_third_voice }
+      >>
+    >>
+  }
+}
 
+
+\bookpart {
+    \header {
       subtitle = \markup {
-          \override #'(font-name . "LilyJazz Text")
-          \fontsize #6
-          Improvisation
+        \override #'(font-name . "LilyJazz Text")
+        \fontsize #5
+        Improvisation
       }
       poet = \markup {
-          %\override #'(font-name . "LilyJazz Text")
-          \rotate #8
-          \fontsize #4
-          #tonality
-      }
-      composer = \markup {
-          \override #'(font-name . "LilyJazz Text")
-          \fontsize #4
-          #composer
+        \override #'(font-name . "lilyjazz-chord")
+        \fontsize #4
+        B\flat
       }
       piece = \markup {
-          \override #'(font-name . "LilyJazz Text")
-          \fontsize #1
-          grille
+        \override #'(font-name . "LilyJazz Text")
+        \fontsize #1
+        Solo
       }
-      tagline = ##t % removed
     }
 
-    \score
-    {
-     <<
+    \score {
+      <<
         \context ChordNames {
-            \override ChordNames . ChordName #'font-name = #"LilyJazz Text, LilyJAZZ"
-            \override ChordNames . ChordName #'font-size = #4
-            \key c \major \transpose c $transposition \grille
+          \transpose c c \grille
         }
-        \new Staff { \jazzOn
-            \bar "||"
-            \rs \rs \rs \rs |
-            \rs \rs \rs \rs |
-            \rs \rs \rs \rs |
-            \rs \rs \rs \rs | \break
-            \rs \rs \rs \rs |
-            \rs \rs \rs \rs |
-            \rs \rs \rs \rs |
-            \rs \rs \rs \rs | \break
-            \rs \rs \rs \rs |
-            \rs \rs \rs \rs |
-            \rs \rs \rs \rs |
-            \rs \rs \rs \rs
-            \bar "||"
+        \new Staff {
+          \repeat unfold 16 { \rs } \break
+          \repeat unfold 16 { \rs } \break
+          \repeat unfold 16 { \rs } \break
         }
-       >>
+      >>
+      \layout {
+        \context {
+          \Staff
+          \remove "Time_signature_engraver"
+          \remove "Clef_engraver"
+          %\remove "Bar_engraver"
+        }
+      }
     }
     \score {
       \header {
-          piece = \markup {
-              \override #'(font-name . "LilyJazz Text")
-              \fontsize #1
-              Background
-          }
+        piece = \markup {
+          \override #'(font-name . "LilyJazz Text")
+          \fontsize #1
+          Background
+        }
       }
       <<
-          \new Staff {
-              \jazzOn
-              \key c \major \transpose c $transposition \relative c' {
-                  \partial 4
-                  ees4\staccato
-                  \repeat volta 2 {
-                      aes2.~^(aes8 ges\staccato)
-                      r4 r8 bes,8^(des8.[ bes16 d8 ees8])
-                      r1
-                      r2 r4 ees\staccato \break
-                  }
-              }
-          }
+        \new Staff {
+          \transpose c c \Background
+        }
      >>
     }
 }
-% https://github.com/veltzer/openbook
-% http://leighverlag.blogspot.com/2015/12/mimicking-real-book-look.html
