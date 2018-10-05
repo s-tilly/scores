@@ -6,9 +6,11 @@ import os
 import shlex
 import subprocess
 
-ut =     { 'transposition': 'c',    'prefix': 'Ut', 'tonality': 'Ut' }
-b_flat = { 'transposition': 'd', 'prefix': 'Bb', 'tonality': 'Bb' }
-e_flat = { 'transposition': 'a,', 'prefix': 'Eb', 'tonality': 'Eb' }
+ut =     { 'transposition': 'c',  'prefix': 'Ut', 'tonality': 'Ut' }
+b_flat = { 'transposition': 'd',  'prefix': 'Bb', 'tonality': 'B\\flat' }
+e_flat = { 'transposition': 'a,', 'prefix': 'Eb', 'tonality': 'E\\flat' }
+
+HERE = os.path.abspath(os.path.dirname(__file__))
 
 def argument_parser():
     parser = argparse.ArgumentParser(description="Lilypond wrapper")
@@ -49,7 +51,9 @@ def run(command, debug=False):
     return p.poll(), stdout, stderr
 
 def call_lilypond(filename):
-    r, out, err = run('lilypond {}'.format(filename))
+    lilyjazz_module = HERE + "/lilyjazz/stylesheet/"
+    my_module = HERE + "/lib/"
+    r, out, err = run('lilypond -I {} -I {} {}'.format(my_module, lilyjazz_module, filename))
     print(out.decode("utf-8"))
     print(err.decode("utf-8"))
 
