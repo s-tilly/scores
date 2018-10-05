@@ -12,7 +12,7 @@ realBookTitle = \markup {
             \override #'(offset . 7)
             \override #'(thickness . 6)
             \underline \larger \larger #title
-          \fontsize #1 \lower #1 \concat { #composer " " }
+          \fontsize #2 \lower #1 \concat { #composer " " }
         }
       }
       s
