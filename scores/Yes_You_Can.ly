@@ -1,34 +1,24 @@
 \version "2.19.82"
+\include "header.ily"
 
-\include "lib/LilyJAZZ.ily"
-\include "lib/custom.ily"
 
-title = "Yes I Can, No You Can't"
-composer = "Lee Morgan"
+title = #"Yes I Can, No You Can't"
+composer = #"-Lee Morgan"
+meter = #" (Med. Swing)"
+thetempo = #120
+transposition = #"$transposition"
+tonality = #"$tonality"
 
-% Une grille du morceau (qui servira pour l'improvisation)
-grille = \chordmode {
-  f1:7 bes:7 f:7 f:7
-  f:7 bes:7 f:7 f:7
-  bes:7 bes:7 bes:7 bes:7
-  f g:m7 f/a aes:m7
-  g:7 g:7 ges:7 ges:7
-  f:7 bes:7 f:7 c:7
-}
-%
-% L'harmonie du morceau
-harmonie = \chordmode {
-  f1:7 f1:7 f1:7 f1:7
-  \grille
-}
 
-theme = \relative c' {
+\include "main.ily"
+
+theNotes = \relative c' {
+  \set Staff.midiInstrument = "Tenor Sax"
   \key f \major
-
-  \mark "Introduction"
+  %\mark "Introduction"
   \bar ".|:" \repeat volta 2 { \repeat percent 4 { R1 } } \break
 
-  \mark "Theme"
+  %\mark "Theme"
   f4\staccato r8 f\staccato c'16-> bes8. gis16( a) r8
   r8 c~ \tuplet 3/2 {c8 ees f} bes16 a aes8~ aes ees16 f
   <d, gis>8 <ees a>~ <ees a>2 r4
@@ -60,143 +50,85 @@ theme = \relative c' {
   c'8 f\staccato f ees\staccato \scoop f8. ees16 \tuplet 3/2 {d16 bes aes} f8
 }
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-tonality = $tonality
-
-#(set-default-paper-size "a4")
-\paper {
-  #(set-paper-size "a4")
-  #(define dump-extents #t)
-
-  %ragged-right = ##t
-  indent = 0\mm
-  line-width = 200\mm %- 2.0 * 0.4\in
-  print-page-number = false
-  %horizontal-shift = ##t
+% Une grille du morceau (qui servira pour l'improvisation)
+grille = \chordmode {
+  \key f \major
+  f1:7 bes:7 f:7 f:7
+  f:7 bes:7 f:7 f:7
+  bes:7 bes:7 bes:7 bes:7
+  f g:m7 f/a aes:m7
+  g:7 g:7 ges:7 ges:7
+  f:7 bes:7 f:7 c:7
 }
 
-
-
-internal_harmonie = \relative \chordmode {
-  \override ChordNames . ChordName #'font-name = #"LilyJazz Text, LilyJAZZ"
-  \override ChordNames . ChordName #'font-size = #4
-  \harmonie
+% L'harmonie du morceau
+harmonie = \chordmode {
+  \key f \major
+  f1:7 f1:7 f1:7 f1:7 % introduction
+  \grille
 }
 
 \bookpart {
-    \header {
-        title = \markup {
-            \override #'(font-name . "LilyJazz Text")
-            \fontsize #7
-            #title
-        }
-        subtitle = \markup {
-            \override #'(font-name . "LilyJazz Text")
-            \fontsize #6
-            Thème
-        }
-        poet = \markup {
-            %\override #'(font-name . "LilyJazz Text")
-            \rotate #8
-            \fontsize #4
-            #tonality
-        }
-        composer = \markup {
-            \override #'(font-name . "LilyJazz Text")
-            \fontsize #4
-            #composer
-        }
-        tagline = ##t % removed
+  \header {
+    subtitle = \markup {
+      \override #'(font-name . "LilyJazz Text")
+      \fontsize #5
+      Theme
     }
-
-    \score {
-      <<
-        \context ChordNames {
-            \transpose c $transposition \internal_harmonie
-        }
-
-            \new Staff { \jazzOn \transpose c $transposition \theme }
-      >>
-
-        %\layout {}
-        %\midi {
-          % \tempo \temps = \bpm
-        %}
+    poet = \markup {
+      \override #'(font-name . "lilyjazz-chord")
+%      \rotate #8
+      \fontsize #4
+      $tonality
     }
-}
-\bookpart {
-    \header {
-
-      title = \markup {
-          \override #'(font-name . "LilyJazz Text")
-          \fontsize #7
-          #title
+  }
+  \score {
+    <<
+      \context ChordNames {
+        \transpose c $transposition \harmonie
       }
+      \new Staff { \transpose c $transposition \theNotes }
+    >>
+    \midi {}
+    \layout {}
+  }
+}
 
+
+\bookpart {
+    \header {
       subtitle = \markup {
-          \override #'(font-name . "LilyJazz Text")
-          \fontsize #6
-          Improvisation
+        \override #'(font-name . "LilyJazz Text")
+        \fontsize #5
+        Improvisation
       }
       poet = \markup {
-          %\override #'(font-name . "LilyJazz Text")
-          \rotate #8
-          \fontsize #4
-          #tonality
-      }
-      composer = \markup {
-          \override #'(font-name . "LilyJazz Text")
-          \fontsize #4
-          #composer
+        \override #'(font-name . "lilyjazz-chord")
+        \fontsize #4
+        $tonality
       }
       piece = \markup {
-          \override #'(font-name . "LilyJazz Text")
-          \fontsize #1
-          grille
+        \override #'(font-name . "LilyJazz Text")
+        \fontsize #1
+        Solo
       }
-      tagline = ##t % removed
     }
 
     \score {
       <<
         \context ChordNames {
-          \override ChordNames . ChordName #'font-name = #"LilyJazz Text, LilyJAZZ"
-          \override ChordNames . ChordName #'font-size = #4
-          \key c \major \transpose c $transposition \grille
+          \transpose c $transposition \grille
         }
         \new Staff {
-          \jazzOn
-          \bar "||"
-          \rs \rs \rs \rs |
-          \rs \rs \rs \rs |
-          \rs \rs \rs \rs |
-          \rs \rs \rs \rs | \break
-          \rs \rs \rs \rs |
-          \rs \rs \rs \rs |
-          \rs \rs \rs \rs |
-          \rs \rs \rs \rs | \break
-          \rs \rs \rs \rs |
-          \rs \rs \rs \rs |
-          \rs \rs \rs \rs |
-          \rs \rs \rs \rs | \break
-          \rs \rs \rs \rs |
-          \rs \rs \rs \rs |
-          \rs \rs \rs \rs |
-          \rs \rs \rs \rs | \break
-          \rs \rs \rs \rs |
-          \rs \rs \rs \rs |
-          \rs \rs \rs \rs |
-          \rs \rs \rs \rs | \break
-          \rs \rs \rs \rs |
-          \rs \rs \rs \rs |
-          \rs \rs \rs \rs |
-          \rs \rs \rs \rs
-          \bar "||"
+          \repeat unfold 6 {\repeat unfold 16 { \rs } \break}
         }
       >>
+      \layout {
+        \context {
+          \Staff
+          \remove "Time_signature_engraver"
+          \remove "Clef_engraver"
+        }
+      }
     }
 }
-% https://github.com/veltzer/openbook
-% http://leighverlag.blogspot.com/2015/12/mimicking-real-book-look.html
