@@ -6,8 +6,8 @@ title = #"Blue Trane"
 composer = #"-John Coltrane"
 meter = #" (Med. Swing)"
 thetempo = #100
-transposition = $transposition
-tonality = $tonality
+transposition = #"$transposition"
+tonality = #"$tonality"
 
 
 \include "main.ily"
@@ -159,6 +159,7 @@ harmonie = \chordmode {
       >>
     >>
     \midi {}
+    \layout {}
   }
 }
 
