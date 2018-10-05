@@ -50,9 +50,11 @@ def run(command, debug=False):
         sys.stdout.flush()
     return p.poll(), stdout, stderr
 
-def call_lilypond(filename):
+def call_lilypond(filename, debug=False):
     lilyjazz_module = HERE + "/lilyjazz/stylesheet/"
     my_module = HERE + "/lib/"
+    if debug:
+        print('>>>>>>>> lilypond -I {} -I {} {}'.format(my_module, lilyjazz_module, filename))
     r, out, err = run('lilypond -I {} -I {} {}'.format(my_module, lilyjazz_module, filename))
     print(out.decode("utf-8"))
     print(err.decode("utf-8"))
@@ -66,19 +68,18 @@ if __name__ == '__main__':
     # if ut = Ok or no option are passed
     if args.ut or not (args.e_flat or args.b_flat):
         filename = generate_input(path=args.ly_filename, variables=ut)
-        call_lilypond(filename)
+        call_lilypond(filename, debug=args.debug)
         if not args.debug:
-            print("Debug mode ", args.debug)
             os.remove(filename)
 
     if args.e_flat:
         filename = generate_input(path=args.ly_filename, variables=e_flat)
-        call_lilypond(filename)
+        call_lilypond(filename, debug=args.debug)
         if not args.debug:
             os.remove(filename)
 
     if args.b_flat:
         filename = generate_input(path=args.ly_filename, variables=b_flat)
-        call_lilypond(filename)
+        call_lilypond(filename, debug=args.debug)
         if not args.debug:
             os.remove(filename)
