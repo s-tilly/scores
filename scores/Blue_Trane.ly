@@ -5,15 +5,15 @@
 title = #"Blue Trane"
 composer = #"-John Coltrane"
 meter = #" (Med. Swing)"
-thetempo = #88
-%tonality = $tonality
-tonality = c
+thetempo = #100
+transposition = $transposition
+tonality = $tonality
 
 
 \include "main.ily"
 
 theNotes_first_voice = \relative c' {
-  \set Staff.midiInstrument = "flute"
+  \set Staff.midiInstrument = "Tenor Sax"
   \key c \major
   r4 r8 bes'8 des f des ees~ \bar "||"
   ees1~ |
@@ -44,7 +44,7 @@ theNotes_first_voice = \relative c' {
 }
 
 TheNotes_second_voice = \relative c {
-  \set Staff.midiInstrument = "flute"
+  \set Staff.midiInstrument = "Tenor Sax"
   \key c \major
   r1  \bar "||"
   r1 |
@@ -75,7 +75,7 @@ TheNotes_second_voice = \relative c {
 }
 
 TheNotes_third_voice = \relative c {
-  \set Staff.midiInstrument = "flute"
+  \set Staff.midiInstrument = "Tenor Sax"
   \key c \major
   r1  \bar "||"
   r1 |
@@ -137,27 +137,28 @@ harmonie = \chordmode {
     subtitle = \markup {
       \override #'(font-name . "LilyJazz Text")
       \fontsize #5
-      Thème
+      Theme
     }
     poet = \markup {
       \override #'(font-name . "lilyjazz-chord")
 %      \rotate #8
       \fontsize #4
-      B\flat
+      $tonality
     }
   }
   \score {
     <<
       \context ChordNames {
-        \transpose c c \harmonie
+        \transpose c $transposition \harmonie
       }
       \new StaffGroup
       <<
-        \new Staff { \transpose c c \theNotes_first_voice }
-        \new Staff { \transpose c c \TheNotes_second_voice }
-        \new Staff { \transpose c c \TheNotes_third_voice }
+        \new Staff { \transpose c $transposition \theNotes_first_voice }
+        \new Staff { \transpose c $transposition \TheNotes_second_voice }
+        \new Staff { \transpose c $transposition \TheNotes_third_voice }
       >>
     >>
+    \midi {}
   }
 }
 
@@ -172,7 +173,7 @@ harmonie = \chordmode {
       poet = \markup {
         \override #'(font-name . "lilyjazz-chord")
         \fontsize #4
-        B\flat
+        $tonality
       }
       piece = \markup {
         \override #'(font-name . "LilyJazz Text")
@@ -184,7 +185,7 @@ harmonie = \chordmode {
     \score {
       <<
         \context ChordNames {
-          \transpose c c \grille
+          \transpose c $transposition \grille
         }
         \new Staff {
           \repeat unfold 16 { \rs } \break
@@ -197,7 +198,6 @@ harmonie = \chordmode {
           \Staff
           \remove "Time_signature_engraver"
           \remove "Clef_engraver"
-          %\remove "Bar_engraver"
         }
       }
     }
@@ -211,7 +211,7 @@ harmonie = \chordmode {
       }
       <<
         \new Staff {
-          \transpose c c \Background
+          \transpose c $transposition \Background
         }
      >>
     }
