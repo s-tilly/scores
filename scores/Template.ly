@@ -45,7 +45,7 @@ ThemeChords = \chordmode {
   \score {
     <<
       \context ChordNames {
-        \transpose c $transposition \chordsChart
+        \transpose c $transposition \ThemeChords
       }
       \new Staff { \transpose c $transposition \theNotes }
     >>
