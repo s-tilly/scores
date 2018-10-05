@@ -127,7 +127,7 @@ grille = \chordmode {
 % L'harmonie du morceau
 harmonie = \chordmode {
   \key c \major
-  r1
+  s1
   \grille
   \grille
 }
