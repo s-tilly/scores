@@ -13,6 +13,6 @@ Install lilyjazz in your systme. You can use `install.sh` but please, read it be
 
 Go to wanted score, then run :
 ```bash
-./lily_wrapper.py score/wanted_piece.ly
-./lily_wrapper.py -h # for help
+./pylily.py score/wanted_piece.ly
+./pylily.py -h # for help
 ```
