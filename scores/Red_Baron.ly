@@ -24,7 +24,7 @@ theNotes = \relative c'' {
     \tuplet 3/2 { des'8 d bes16 a16 } \tuplet 3/2 { g8 des' d } \tuplet 3/2 { bes16 a g8 des' } \tuplet 3/2 { d8 bes16 a g' g,~ } | % 12
     g4 r4 f16 g8\staccato g16 r g r g |
     bes8\staccato a16 g a bes g8~ g4 g16 bes8\staccato c16 | \break
-    des16 d8\staccato g16 r d r g, bes8 \tuplet 3/2 { a16 g f } \tuplet 3/2 { d8 a'16 g8 f16 } % 15
+    des16 d8\staccato g16 r d r g, bes8 \tuplet 3/2 { a16 g f } \tuplet 3/2 { d8 bes'16 a8 g16 } % 15
     \tuplet 3/2 { a8 g16 f8 a16~ } a2. |
   }
   \alternative {
