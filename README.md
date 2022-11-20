@@ -7,7 +7,7 @@ Some scores written with Lilypond
 - python3
 - lilypond
 
-Install lilyjazz in your systme. You can use `install.sh` but please, read it before you execute it as root.
+Install lilyjazz in your system. You can use `install.sh` but please, read it before you execute it as root.
 
 ## Usage
 
