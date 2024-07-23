@@ -1,4 +1,4 @@
-\version "2.19.82"
+\version "2.24.0"
 \include "header.ily"
 
 
@@ -17,7 +17,7 @@ theNotes = \relative c'' {
   \key bes \major
   r1 r r r | \break
   r r r r2 r4 r8 g'16 g, \bar "||" \break
-  \repeat volta 2 { \bar ".|:"
+  \repeat volta 2 { \bar ".|:-|"
     r2 f16 g8\staccato g16 r g r g | % 9
     bes8\staccato a16 g a bes g8~ g4 r8 g'16 g, |
     r2 f16 g8\staccato g16 r g r g | \break

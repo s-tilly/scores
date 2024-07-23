@@ -1,4 +1,4 @@
-\version "2.19.82"
+\version "2.24.0"
 \include "header.ily"
 
 
@@ -16,7 +16,7 @@ theNotes = \relative c' {
   \set Staff.midiInstrument = "Tenor Sax"
   \key f \major
   %\mark "Introduction"
-  \bar ".|:" \repeat volta 2 { \repeat percent 4 { R1 } } \break
+  \bar ".|:-|" \repeat volta 2 { \repeat percent 4 { R1 } } \break
 
   %\mark "Theme"
   f4\staccato r8 f\staccato c'16-> bes8. gis16( a) r8

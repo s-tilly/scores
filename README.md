@@ -9,6 +9,10 @@ Some scores written with Lilypond
 
 Install lilyjazz in your system. You can use `install.sh` but please, read it before you execute it as root.
 
+### Archlinux
+
+Just install [lilyjazz AUR](https://aur.archlinux.org/packages/lilyjazz)
+
 ## Usage
 
 Go to wanted score, then run :

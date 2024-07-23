@@ -1,3 +1,5 @@
+\version "2.24.0"
+
 % Instead of \bendBefore (not implemented)
 % Thanks to http://lilypond.1069038.n5.nabble.com/bendBefore-td158553.html
 #(define (scoop-stencil grob)
@@ -9,7 +11,7 @@
               #:path 0.25 '((moveto 0 0)
                             (curveto 0 -1 -1 -1.5 -1.5 -1.5))))))
 
-scoop = \once \override NoteHead #'stencil = #scoop-stencil
+scoop = \once \override NoteHead.stencil = #scoop-stencil
 
 % Usage
 % \new Staff { \scoop c''4 }
@@ -18,7 +20,7 @@ scoop = \once \override NoteHead #'stencil = #scoop-stencil
 
 % one / per beat in improvisation structure
 rs = {
-  \once \override Rest.stencil = #ly:percent-repeat-item-interface::beat-slash
+  \once \override Rest.stencil = #ly:percent-repeat-interface::beat-slash
   \once \override Rest.thickness = #0.48
   \once \override Rest.slope = #1.7
   r4

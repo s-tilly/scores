@@ -3,7 +3,7 @@
 # Just 3 commands to install lilyjazz on my system
 # Crappy mode...
 
-LILYPOND_VERSION=$(lilypond -vs | head -1 | sed "s/GNU LilyPond //")
+LILYPOND_VERSION=$(lilypond -vs | head -1 | sed "s/GNU LilyPond //; s/ (.*//")
 
 if [ $(id -u) -ne 0 ]; then
     echo "Are you root ?"
