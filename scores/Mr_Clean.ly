@@ -7,14 +7,54 @@ composer = #"-Freddy Hubbard"
 meter = #" (Med. Funk)"
 thetempo = #140
 transposition = #"$transposition"
+instrument_key_name = #"$instrument_key_name"
 tonality = #"$tonality"
 
 
 \include "main.ily"
 
+#(define (get-solo-chord transposition)
+  (let ((target-root 0))
+   (cond
+    ((equal? transposition "c")
+     (set! target-root 5)) ; Ut -> F
+    ((equal? transposition "bes")
+     (set! target-root 7)) ; Bb -> G
+    ((equal? transposition "ees")
+     (set! target-root 10)) ; Eb -> A
+    (else
+     (set! target-root 5)))
+
+   (let* ((root-names '("C" "Db" "D" "Eb" "E" "F" "Gb" "G" "Ab" "A" "Bb" "B"))
+           (root-index (modulo target-root 12)))
+    ; On renvoie directement la racine (ex: "Bb") + "m7"
+    (string-append (list-ref root-names root-index) "m7"))))
+% #(define (get-solo-chord transposition)
+%   (let ((target-root 0))
+%    (cond
+%     ((equal? transposition "c")
+%      (set! target-root 5))
+%     ((equal? transposition "bes")
+%      (set! target-root 7))
+%     ((equal? transposition "ees")
+%      (set! target-root 10))
+%     (else
+%      (set! target-root 5)))
+%
+%    (let* ((root-names '("c" "des" "d" "ees" "e" "f" "ges" "g" "aes" "a" "bes" "b"))
+%            (root-index (modulo target-root 12))
+%            (chord-string (string-append (list-ref root-names root-index) "m7"))
+%            (first-char (string-ref chord-string 0)))
+%
+%      ; Construction de la chaîne avec la première lettre en majuscule
+%     (string-append
+%      (string (char-upcase first-char))
+%      (substring chord-string 1 (string-length chord-string))))))
+% -----------------------------------------------------
+
 theNotes = \relative c' {
    \set Staff.midiInstrument = "Tenor Sax"
-  \key f \major
+  \key ees \major
   \partial 8 c'8 |
   \bar "||"
   f f ees f r2 |
@@ -45,10 +85,10 @@ theNotes = \relative c' {
        c8 c4 c8~ c8 c c4 |
      }
    >>
-\once \override Score.RehearsalMark.extra-offset = #'(0 . -20)
+\once \override Score.RehearsalMark.extra-offset = #'(10 . -25)
    \mark \markup {
      \override #'(font-name . "LilyJazz Text")
-     \box "Solo on Fm7"
+     #(string-append "Solo on " (get-solo-chord "$instrument_key_name"))
    }
    r2 r4. \parenthesize c8 | \bar "||"
 
