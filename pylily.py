@@ -6,9 +6,9 @@ import os
 import shlex
 import subprocess
 
-ut =     { 'transposition': 'c',  'prefix': 'Ut', 'tonality': 'Ut' }
-b_flat = { 'transposition': 'd',  'prefix': 'Bb', 'tonality': 'B\\flat' }
-e_flat = { 'transposition': 'a,', 'prefix': 'Eb', 'tonality': 'E\\flat' }
+ut =     { 'transposition': 'c', 'instrument_key_name': 'c',   'prefix': 'Ut', 'tonality': 'Ut' }
+b_flat = { 'transposition': 'd', 'instrument_key_name': 'bes', 'prefix': 'Bb', 'tonality': 'B\\flat' }
+e_flat = { 'transposition': 'a', 'instrument_key_name': 'ees', 'prefix': 'Eb', 'tonality': 'E\\flat' }
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 
