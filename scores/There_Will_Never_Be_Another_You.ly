@@ -101,7 +101,7 @@ ThemeChords = \chordmode {
   aes:maj7 des:7.11+ ees:maj7 c:m7
   f:7 f:7 f:m7 bes:7
   \mark "B"
-  bes:maj7 ees:maj7 d:m7.5- g:7.9-
+  ees:maj7 ees:maj7 d:m7.5- g:7.9-
   c:m7 c:m7 bes:m7 ees:7
   aes:maj7 des:7.11+ ees:maj7 a2:m7.5- d:7
   ees:maj7 aes:7 g:m7 c:7 f:m7 bes:7 ees:maj7 bes:7
